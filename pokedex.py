@@ -63,9 +63,9 @@ def filter_pokemon(error_label_id=None, error_label_name=None):
     if search_text.isdigit(): # if the input is a number
         pokemon_id = int(search_text)
         
-        if 1 <= pokemon_id <= 151: # if the id is between 1 and 151
+        try:
             pokemon_details(pokemon_id)
-        else:
+        except:
             error_label_id.place(x=280, y=35)
     else:
         try: # if entry matches a pokemon
@@ -73,7 +73,7 @@ def filter_pokemon(error_label_id=None, error_label_name=None):
             pokemon_details(pokemon['id'])
         except:
             error_label_name.place(x=280, y=35)
-    
+
 def create_temp_frame(): # creates a temporary frame to use 
     temp_frame = Frame(root, bg="#314663")
     temp_frame.place(x=0, y=0, width=600, height=700)
@@ -130,14 +130,18 @@ def update_main_frames(frames, rows, columns):
 
                     # shows the pokemon id and name and keeping the id have 3 digits
                     if pokemon_id < 10: 
-                        Label(pokemon_frame, text=f"#00{pokemon['id']}", font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
+                        Label(pokemon_frame, text=f"#00{pokemon['id']}",
+                              font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
                     else:
                         if pokemon_id < 100:
-                            Label(pokemon_frame, text=f"#0{pokemon['id']}", font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
+                            Label(pokemon_frame, text=f"#0{pokemon['id']}",
+                                  font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
                         else:
-                            Label(pokemon_frame, text=f"#{pokemon['id']}", font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
+                            Label(pokemon_frame, text=f"#{pokemon['id']}",
+                                  font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
 
-                    Label(pokemon_frame, text=f"{pokemon['name'].title()}", font=("Lexend 12")).place(x=13, y=112)
+                    Label(pokemon_frame, text=f"{pokemon['name'].title()}",
+                          font=("Lexend 12")).place(x=13, y=112)
                     
                     # shows the pokemon types and saves it in a list to frame them
                     type_images = []
@@ -159,7 +163,8 @@ def pokemon_details(pokemon_id):
     pokemon_image = get_pokemon_image(pokemon_id)
     temp_frame = create_temp_frame()
     
-    title = Label(temp_frame, text=f"{pokemon['name'].title()}", font=("Lexend 22 bold"), fg="#fff", bg="#314663")
+    title = Label(temp_frame, text=f"{pokemon['name'].title()}",
+                  font=("Lexend 22 bold"), fg="#fff", bg="#314663")
     
     # using the id of the pokemon and configuring the title
     if pokemon_id < 10:
@@ -236,7 +241,7 @@ def pokemon_details(pokemon_id):
         type_images.append(img)
         
     for index, img in enumerate(type_images): # shows the images of the pokemon types
-        Label(temp_frame, image=img, bg="#f0f0f0").place(x=300 + index * 140, y=410)
+        Label(temp_frame, image=img, bg="#f0f0f0").place(x=300 + index * 140, y=415)
 
     temp_frame.type_images = type_images
     
@@ -263,16 +268,16 @@ def pokemon_details(pokemon_id):
 
     weakness_images = [] # saves the images of the remaining weaknesses
     for index, type_name in enumerate(remaining_weaknesses):
-        img_path1 = f"pokemon types/{type_name}.png"
-        img1 = Image.open(img_path1)
-        img1 = ImageTk.PhotoImage(img1)
+        img_path2 = f"pokemon types/{type_name}.png"
+        img2 = Image.open(img_path2)
+        img2 = ImageTk.PhotoImage(img2)
         
         # creates a row and column for the images to be displayed
         row = index // 2
         column = index % 2 
         
-        Label(weakness_frame, image=img1, bg="#f0f0f0").grid(row=row, column=column, sticky=W, padx=6, pady=3)
-        weakness_images.append(img1)
+        Label(weakness_frame, image=img2, bg="#f0f0f0").grid(row=row, column=column, sticky=W, padx=6, pady=3)
+        weakness_images.append(img2)
         
     weakness_frame.weakness_images = weakness_images
     
@@ -288,11 +293,12 @@ def title_screen():
     temp_frame = create_temp_frame()
     
     title_frame_center = Frame(root, bg="#314663")
-    title_frame_center.place(x=0, y=220, width=600, height=300)
+    title_frame_center.place(x=0, y=210, width=600, height=300)
     
     Label(title_frame_center, text="Welcome to\nPokéFinder!", font=("Lexend 22 bold"), bg="#314663", fg="#fff").pack(pady=10)
     
-    Label(title_frame_center, text="Click on any pokémon icon or search by ID or name\nto access its details.", 
+    Label(title_frame_center,
+          text="Click on any Pokémon icon or search by ID or name\nto access its details. Only the first 151 Pokémon\nare displayed. Use the search function to find\nPokémon in any generation.", 
           font=("Lexend 15"), bg="#314663", fg="#fff").pack(pady=10)
 
     Button(title_frame_center, text="Start", width=15, font=("Lexend 12"), bg="#fff",
@@ -311,7 +317,8 @@ error_label_id = Label(root, text="Error: Invalid Pokemon ID.", font=("Lexend 9"
 error_label_name = Label(root, text="Error: Invalid Pokemon name.", font=("Lexend 9"), bg="#e13f38", fg="#fff")
 
 # search button
-search_button = Button(root, text="Search", width=10, font=("Lexend 7"), command=lambda:filter_pokemon(error_label_id, error_label_name))
+search_button = Button(root, text="Search", width=10, font=("Lexend 7"), 
+                       command=lambda:filter_pokemon(error_label_id, error_label_name))
 search_button.place(x=470, y=15)
 
 # previous and next buttons to switch between frames
@@ -333,7 +340,7 @@ next_button.place(x=490, y=70)
 main_frame_list = []
 
 # the number of frames and rows and columns
-frames = 17
+frames = 1
 rows = 3
 columns = 3
 
