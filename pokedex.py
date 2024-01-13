@@ -340,7 +340,7 @@ next_button.place(x=490, y=70)
 main_frame_list = []
 
 # the number of frames and rows and columns
-frames = 1
+frames = 17
 rows = 3
 columns = 3
 
