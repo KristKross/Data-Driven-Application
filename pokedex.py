@@ -60,13 +60,14 @@ def filter_pokemon(error_label_id=None, error_label_name=None):
     error_label_id.place_forget()
     error_label_name.place_forget()
     
-    if search_text.isdigit(): # if the input is a number
+    if search_text.isnumeric(): # if the input is a number
         pokemon_id = int(search_text)
-        
+
         try:
             pokemon_details(pokemon_id)
         except:
-            error_label_id.place(x=280, y=35)
+            error_label_id.place(x=280, y=35)     
+
     else:
         try: # if entry matches a pokemon
             pokemon = get_pokemon(search_text)
@@ -130,12 +131,16 @@ def update_main_frames(frames, rows, columns):
 
                     # shows the pokemon id and name and keeping the id have 3 digits
                     if pokemon_id < 10: 
-                        Label(pokemon_frame, text=f"#00{pokemon['id']}",
+                        Label(pokemon_frame, text=f"#000{pokemon['id']}",
                               font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
                     else:
                         if pokemon_id < 100:
-                            Label(pokemon_frame, text=f"#0{pokemon['id']}",
-                                  font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
+                            if pokemon_id < 1000:
+                                Label(pokemon_frame, text=f"#00{pokemon['id']}",
+                                    font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
+                            else:
+                                Label(pokemon_frame, text=f"#0{pokemon['id']}",
+                                    font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
                         else:
                             Label(pokemon_frame, text=f"#{pokemon['id']}",
                                   font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
@@ -168,10 +173,13 @@ def pokemon_details(pokemon_id):
     
     # using the id of the pokemon and configuring the title
     if pokemon_id < 10:
-        title.config(text = f"{pokemon['name'].title()} #00{pokemon['id']}")
+        title.config(text = f"{pokemon['name'].title()} #000{pokemon['id']}")
     else:
         if pokemon_id < 100:
-            title.config(text = f"{pokemon['name'].title()} #0{pokemon['id']}")
+            if pokemon_id < 1000:
+                title.config(text = f"{pokemon['name'].title()} #00{pokemon['id']}")
+            else:
+                title.config(text = f"{pokemon['name'].title()} #0{pokemon['id']}")
         else:
             title.config(text = f"{pokemon['name'].title()} #{pokemon['id']}")
     
@@ -340,9 +348,9 @@ next_button.place(x=490, y=70)
 main_frame_list = []
 
 # the number of frames and rows and columns
-frames = 17
-rows = 3
-columns = 3
+frames = 1
+rows = 1
+columns = 1
 
 update_main_frames(frames, rows, columns)
 
