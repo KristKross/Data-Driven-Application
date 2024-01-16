@@ -135,15 +135,15 @@ def update_main_frames(frames, rows, columns):
                               font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
                     else:
                         if pokemon_id < 100:
+                            Label(pokemon_frame, text=f"#00{pokemon['id']}",
+                                  font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
+                        else:
                             if pokemon_id < 1000:
-                                Label(pokemon_frame, text=f"#00{pokemon['id']}",
-                                    font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
-                            else:
                                 Label(pokemon_frame, text=f"#0{pokemon['id']}",
                                     font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
-                        else:
-                            Label(pokemon_frame, text=f"#{pokemon['id']}",
-                                  font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)
+                            else:
+                                Label(pokemon_frame, text=f"#{pokemon['id']}",
+                                    font=("Lexend 8"), fg="#bfbfbf").place(x=13, y=92)        
 
                     Label(pokemon_frame, text=f"{pokemon['name'].title()}",
                           font=("Lexend 12")).place(x=13, y=112)
@@ -176,12 +176,13 @@ def pokemon_details(pokemon_id):
         title.config(text = f"{pokemon['name'].title()} #000{pokemon['id']}")
     else:
         if pokemon_id < 100:
-            if pokemon_id < 1000:
-                title.config(text = f"{pokemon['name'].title()} #00{pokemon['id']}")
-            else:
-                title.config(text = f"{pokemon['name'].title()} #0{pokemon['id']}")
+            title.config(text = f"{pokemon['name'].title()} #00{pokemon['id']}")
         else:
-            title.config(text = f"{pokemon['name'].title()} #{pokemon['id']}")
+            if pokemon_id < 1000:
+                title.config(text = f"{pokemon['name'].title()} #0{pokemon['id']}")
+            else:
+                title.config(text = f"{pokemon['name'].title()} #{pokemon['id']}")
+            
     
     title.pack(pady=5)
     
@@ -349,8 +350,8 @@ main_frame_list = []
 
 # the number of frames and rows and columns
 frames = 1
-rows = 1
-columns = 1
+rows = 3
+columns = 3
 
 update_main_frames(frames, rows, columns)
 
